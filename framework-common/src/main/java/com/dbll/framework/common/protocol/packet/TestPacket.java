@@ -1,6 +1,7 @@
 package com.dbll.framework.common.protocol.packet;
 
 import com.dbll.framework.common.protocol.AbstractPacket;
+import com.dbll.framework.common.protocol.Protocol;
 import com.google.protobuf.AbstractMessage;
 
 public class TestPacket extends AbstractPacket{
@@ -18,9 +19,8 @@ public class TestPacket extends AbstractPacket{
 	}
 
 	@Override
-	public void sendMessage(byte[] message) {
-		// TODO Auto-generated method stub
-		
+	public void setOpCode() {
+		opCode = Protocol.TEST_PROTOCOL.getOpCode();
 	}
 
 
