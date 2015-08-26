@@ -7,17 +7,22 @@ import com.dbll.framework.common.netty.pipeline.MessageHandler;
 import com.dbll.framework.common.server.Server;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.DefaultEventExecutor;
 
 public class NettyServer implements Server {
 	
 	private final static Logger LOG = LoggerFactory.getLogger(NettyServer.class);
+	
+	public static final ChannelGroup ALL_CHANNELS = new DefaultChannelGroup("SEVER_CHANNELS", new DefaultEventExecutor());
 
 	protected int bindPort;
 
@@ -26,7 +31,7 @@ public class NettyServer implements Server {
 	
 	protected ServerBootstrap BootStrap;
 	
-	protected Channel channel;
+	protected ChannelFuture channelFuture;
 	
 	public NettyServer(int bindPort) {
 		this.bindPort = bindPort;
@@ -36,7 +41,7 @@ public class NettyServer implements Server {
 	public void shutdown() throws InterruptedException {
 		
 		try{
-			channel.closeFuture().sync();
+			channelFuture.channel().closeFuture().sync();
 			
 			LOG.info("NETTY SERVER SHUTDOWN!");
 		} finally {
@@ -66,7 +71,7 @@ public class NettyServer implements Server {
 				.childOption(ChannelOption.SO_KEEPALIVE, true)
 				.childOption(ChannelOption.TCP_NODELAY, true);
 		
-		channel = BootStrap.bind(bindPort).sync().channel();
+		channelFuture = BootStrap.bind(bindPort).sync();
 		
 		LOG.info("NETTY SERVER STARTED!");
 	}
