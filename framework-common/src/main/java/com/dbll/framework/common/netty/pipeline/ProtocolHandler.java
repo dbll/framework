@@ -1,13 +1,20 @@
 package com.dbll.framework.common.netty.pipeline;
 
+import com.dbll.framework.common.session.DefaultSession;
+import com.dbll.framework.common.session.Session;
+import com.dbll.framework.common.session.SessionGroup;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPromise;
 import io.netty.util.ReferenceCountUtil;
 
-public class MessageHandler extends ChannelHandlerAdapter{
+public class ProtocolHandler extends ChannelHandlerAdapter{
+	
+	private Session session;
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg)
@@ -16,7 +23,6 @@ public class MessageHandler extends ChannelHandlerAdapter{
 		ByteBuf in = (ByteBuf) msg;
 		
 		try {
-	        // Do something with msg
 			
 			while (in.isReadable()) { // (1)
 				System.out.print((char) in.readByte());
@@ -37,19 +43,21 @@ public class MessageHandler extends ChannelHandlerAdapter{
 
 	@Override
 	public void channelActive(final ChannelHandlerContext ctx) throws Exception {
-		 final ByteBuf time = ctx.alloc().buffer(4); // (2)
-	        time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
-
-	        final ChannelFuture f = ctx.writeAndFlush(time); // (3)
-	        f.addListener(new ChannelFutureListener() {
-
-	            public void operationComplete(ChannelFuture future) {
-	                assert f == future;
-	                ctx.close();
-	            }
-	        }); // (4)
+		
+		 SessionGroup.ALL_CHANNELS.add(ctx.channel());
+		 
+		 session = DefaultSession.build(ctx.channel());
+		 
 	}
 
-	
+	@Override
+	public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+		super.close(ctx, promise);
+		session = null;
+	}
+
+	public Session getSession(){
+		return session;
+	}
 	
 }

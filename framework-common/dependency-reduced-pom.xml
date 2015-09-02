@@ -22,7 +22,7 @@
         <configuration>
           <transformers>
             <transformer>
-              <mainClass>org.dbll.framework.App</mainClass>
+              <mainClass>com.dbll.framework.common.app.App</mainClass>
             </transformer>
           </transformers>
         </configuration>
@@ -36,14 +36,6 @@
       </plugin>
     </plugins>
   </build>
-  <dependencies>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.16.6</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
   <dependencyManagement>
     <dependencies>
       <dependency>

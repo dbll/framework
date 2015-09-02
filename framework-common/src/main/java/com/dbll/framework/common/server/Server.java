@@ -15,13 +15,13 @@ public interface Server {
 	/**
 	 * stop the server
 	 */
-	public void shutdown() throws Exception;
+	void shutdown() throws Exception;
 
 	/**
 	 * stop the server
 	 */
-	public void startup() throws Exception;
+	void startup() throws Exception;
 	
-	public int getBindPort();
+	int getBindPort();
 	
 }

@@ -4,10 +4,12 @@ import com.google.protobuf.AbstractMessage;
 
 public interface Packet {
 	
-	public void setOpCode();
-
-	public AbstractMessage Unpacked(byte[] data);
+	void setOpCode();
 	
-	public byte[] packed(AbstractMessage message);
+	int getOpCode();
+
+	AbstractMessage Unpacked(byte[] data);
+	
+	byte[] packed(AbstractMessage message);
 	
 }
