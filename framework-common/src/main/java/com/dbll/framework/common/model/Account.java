@@ -3,7 +3,6 @@ package com.dbll.framework.common.model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dbll.framework.common.protocol.AbstractPacket;
 import com.dbll.framework.common.session.Session;
 
 public class Account {
@@ -19,14 +18,14 @@ public class Account {
 		this.session = session;
 	}
 	
-	public void sendMessage(AbstractPacket packet) {
+	public void sendMessage(int opCode, byte[] data) {
 		
 		try {
 			
-			session.sendMessage(packet);
+			session.sendMessage(data);
 			
 		} catch (Exception e) {
-			LOG.error("SEND MESSAGE " + packet.getOpCode() 
+			LOG.error("SEND MESSAGE " + opCode 
 				+ " TO " + accountId + " FAILD!", e.fillInStackTrace());
 		}
 	}

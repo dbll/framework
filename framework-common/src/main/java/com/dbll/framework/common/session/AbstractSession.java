@@ -1,6 +1,7 @@
 package com.dbll.framework.common.session;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelId;
 
 public abstract class AbstractSession implements Session{
 	
@@ -10,16 +11,16 @@ public abstract class AbstractSession implements Session{
 	
 	private int accountId;
 	
-	private Channel channel;
+	private ChannelId channelId;
 	
 	private Session session;
 	
 	protected AbstractSession(Channel channel) {
-		this.channel = channel;
+		this.channelId = channel.id();
 		createTime = System.currentTimeMillis();
 	}
 	
-	public abstract void sendMessage(com.dbll.framework.common.protocol.AbstractPacket packet) throws Exception;
+	public abstract void sendMessage(byte[] bytes) throws Exception;
 
 	public abstract void close();
 	
@@ -54,8 +55,8 @@ public abstract class AbstractSession implements Session{
 	}
 
 	@Override
-	public Channel getChannel() {
-		return channel;
+	public ChannelId getChannelId() {
+		return channelId;
 	}
 
 	@Override

@@ -1,8 +1,6 @@
 package com.dbll.framework.common.session;
 
-import com.dbll.framework.common.protocol.AbstractPacket;
-
-import io.netty.channel.Channel;
+import io.netty.channel.ChannelId;
 
 public interface Session {
 
@@ -22,12 +20,12 @@ public interface Session {
 
 	void setAccoutId(int accountId);
 	
-	Channel getChannel();
+	ChannelId getChannelId();
 	
 	void destory();
 	
 	Session getInstance();
 	
-	void sendMessage(AbstractPacket packet) throws Exception;
+	void sendMessage(byte[] packet) throws Exception;
 	
 }

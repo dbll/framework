@@ -17,7 +17,7 @@ public class SessionGroup {
 	
 	public static final ChannelGroup ALL_CHANNELS = new DefaultChannelGroup(DEFAULT_NAME, new DefaultEventExecutor());
 	
-	private static Map<Integer, Session> ACCOUNT_SESSION_MAP = Maps.newHashMap();
+	public static Map<Integer, Session> ACCOUNT_SESSION_MAP = Maps.newHashMap();
 	
 	
 	/**

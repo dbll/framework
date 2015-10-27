@@ -1,7 +1,5 @@
 package com.dbll.framework.common.session;
 
-import com.dbll.framework.common.protocol.AbstractPacket;
-
 import io.netty.channel.Channel;
 
 public class DefaultSession extends AbstractSession{
@@ -11,15 +9,17 @@ public class DefaultSession extends AbstractSession{
 	}
 
 	@Override
-	public void sendMessage(AbstractPacket packet) throws Exception {
-		// TODO Auto-generated method stub
+	public void sendMessage(byte[] packet) throws Exception {
+		Channel channel = SessionGroup.ALL_CHANNELS.find(getChannelId());
+		if (channel.isActive()) {
+			channel.writeAndFlush(packet);
+		}
 		
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
+		SessionGroup.ACCOUNT_SESSION_MAP.remove(getAccountId());
 	}
 	
 	public static Session build(Channel channel){
