@@ -2,7 +2,7 @@ package com.dbll.framework.common.command;
 
 import com.google.protobuf.AbstractMessage;
 
-public interface Command {
+public interface Command extends Runnable{
 	
 	void setOpCode();
 	
@@ -12,6 +12,4 @@ public interface Command {
 	
 	void setAbstractMessage(AbstractMessage message);
 
-	void excute();
-	
 }

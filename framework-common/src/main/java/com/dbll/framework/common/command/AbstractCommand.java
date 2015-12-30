@@ -2,7 +2,7 @@ package com.dbll.framework.common.command;
 
 import com.google.protobuf.AbstractMessage;
 
-public abstract class AbstractCommand implements Command {
+public abstract class AbstractCommand implements Command{
 	
 	private int opCode;
 	
@@ -20,6 +20,5 @@ public abstract class AbstractCommand implements Command {
 		this.message = message;
 	}
 
-	public abstract void excute();
 	
 }

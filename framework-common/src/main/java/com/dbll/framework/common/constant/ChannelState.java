@@ -1,5 +1,5 @@
 package com.dbll.framework.common.constant;
 
-public enum ChanalState {
+public enum ChannelState {
 	RUNNING,CLOSED,CONNECTING,CLOSING
 }
